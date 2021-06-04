@@ -5,7 +5,14 @@ var packageData = require("./package.json");
 module.exports = {
   entry: {
     // Point "entry" to scripts you want to be CLI-eligible.
-    "main-script-name": "./src/main.ts",
+
+    slime_turn0: "./src/slime_turn0.ts",
+    slime_turn0_combat: "./src/slime_turn0_combat.ts",
+    slime_night: "./src/slime_night.ts",
+    slime: "./src/slime.ts",
+    tuberoll: "./src/tuberoll.ts",
+    slime_diet: "./src/slime_diet.ts",
+    slime_buffs: "./src/slime_buffs.ts",
   },
   mode: "development",
   devtool: false,
