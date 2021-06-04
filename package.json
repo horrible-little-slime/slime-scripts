@@ -1,6 +1,6 @@
 {
   "name": "slime-scripts",
-  "version": "slime-scripts",
+  "version": "1.0.0",
   "description": "these are the scripts i use for sliming",
   "main": "slime.js",
   "scripts": {
