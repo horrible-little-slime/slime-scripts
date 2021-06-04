@@ -27,7 +27,7 @@ import {
 import { $location, $item, $slot, $effect, $skill, $familiar, have, Macro } from "libram";
 import { get, set } from "libram/dist/property";
 import { banderRun, ghostStasis, reDigitize, runAway, stasisKill } from "./macros";
-import { adventureMacroAA, pickBjorn, prepWandererZone } from "./phlib";
+import { advMacroAA, pickBjorn, prepWandererZone } from "./phlib";
 
 const freeFightOutfit = "freefight stasis"; //get('freeFightOutfit');
 const slimeOutfit = "slimeml"; //get('slimeOutfit');
@@ -181,7 +181,7 @@ export function main(target: string) {
                 equip($slot`back`, $item`protonic accelerator pack`);
             }
             restoreHp(myMaxhp());
-            adventureMacroAA(
+            advMacroAA(
                 prepWandererZone(),
                 Macro.externalIf(
                     get("_sourceTerminalDigitizeMonsterCount") >= 6 &&
@@ -217,7 +217,7 @@ export function main(target: string) {
             }
             equip($slot`acc3`, $item`"I Voted!" sticker`);
             restoreHp(myMaxhp());
-            adventureMacroAA(
+            advMacroAA(
                 prepWandererZone(),
                 stasisKill,
                 () => {
@@ -251,7 +251,7 @@ export function main(target: string) {
             }
             equip($slot`off-hand`, $item`Kramco Sausage-o-Matic™`);
             restoreHp(myMaxhp());
-            adventureMacroAA(
+            advMacroAA(
                 prepWandererZone(),
                 stasisKill,
                 () => {

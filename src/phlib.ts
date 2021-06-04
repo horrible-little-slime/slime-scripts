@@ -324,7 +324,7 @@ export function prepWandererZone() {
     return freeFightZone;
 }
 
-export function adventureMacroAA(
+export function advMacroAA(
     location: Location,
     macro: Macro,
     parameter: number | (() => boolean) = 1,
@@ -345,7 +345,7 @@ export function adventureMacroAA(
     }
 }
 
-export function adventureMacro(
+export function advMacro(
     location: Location,
     macro: Macro,
     parameter: number | (() => boolean) = 1,

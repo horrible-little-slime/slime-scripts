@@ -36,6 +36,7 @@ import {
     retrieveItem,
     takeStash,
     setAutoAttack,
+    haveSkill,
 } from "kolmafia";
 import {
     Macro,
@@ -54,7 +55,8 @@ import {
 import { get, getString, set } from "libram/dist/property";
 import { runAway, stasisKill } from "./macros";
 import {
-    adventureMacroAA,
+    advMacro,
+    advMacroAA,
     funBuddyNames,
     getRandFromArray,
     pickBjorn,
@@ -73,7 +75,7 @@ print(
     "Initializing: clan-hopping, ccs-setting, bastille-doing, deck-cheating, terminal-enhancing, briefcase-buffing"
 );
 visitUrl(`showclan.php?whichclan=84165&action=joinclan&confirm=on&pwd`);
-cliExecute("ccs turn0");
+cliExecute("ccs twiddle");
 if (get("_bastilleGames") === 0) {
     cliExecute("bastille babar brutalist lava catapult");
 }
@@ -223,7 +225,7 @@ if (getProperty("_questPartyFairQuest") == "food") {
 }
 
 print("Getting my free volcoino!", "blue");
-if (!get<boolean>("_infernoDiscoVisited")) {
+if (!get("_infernoDiscoVisited")) {
     maximize("disco style", false);
     visitUrl("place.php?whichplace=airport_hot&action=airport4_zone1");
     runChoice(7);
@@ -351,11 +353,11 @@ if (!getString("_beachHeadsUsed").includes("10")) {
     cliExecute("beach head familiar");
 }
 
-if (!get<boolean>("_clanFortuneBuffUsed")) {
+if (!get("_clanFortuneBuffUsed")) {
     cliExecute("fortune buff susie");
 }
 
-if (!get<boolean>("concertVisited")) {
+if (!get("concertVisited")) {
     cliExecute("concert winklered");
 }
 
@@ -363,29 +365,29 @@ cliExecute("beachcomber.ash free");
 cliExecute("detective solver.ash");
 putCloset(itemAmount($item`sand dollar`), $item`sand dollar`);
 
-if (!get<boolean>("_madTeaParty")) {
+if (!get("_madTeaParty")) {
     cliExecute("hatter reinforced beaded headband");
 }
-if (!get<boolean>("_ballpit")) {
+if (!get("_ballpit")) {
     cliExecute("ballpit");
 }
-if (!get<boolean>("_aprilShower")) {
+if (!get("_aprilShower")) {
     cliExecute("shower warm");
 }
-if (!get<boolean>("telescopeLookedHigh")) {
+if (!get("telescopeLookedHigh")) {
     cliExecute("telescope high");
 }
-if (!get<boolean>("friarsBlessingReceived")) {
+if (!get("friarsBlessingReceived")) {
     cliExecute("friars familiar");
 }
 cliExecute("/aa off");
 
 use(1, $item`Bird-a-Day Calendar`);
-while (get<number>("_birdsSoughtToday") < 6) {
+while (get("_birdsSoughtToday") < 6) {
     useSkill(1, $skill`Seek out a Bird`);
 }
 
-if (!getString("_mummeryMods").includes("Meat Drop")) {
+if (!get("_mummeryMods").includes("Meat Drop")) {
     useFamiliar($familiar`Stocking Mimic`);
     cliExecute("mummery meat");
 }
@@ -480,7 +482,7 @@ if (haveEffect($effect`coated in slime`) === 0) {
     useFamiliar($familiar`left-hand man`);
     outfit("slimefree");
     equip($slot`familiar`, $item`HOA regulation book`);
-    adventureMacroAA($location`the slime tube`, runAway, () => {
+    advMacroAA($location`the slime tube`, runAway, () => {
         return !have($effect`coated in slime`);
     });
     cliExecute("/whitelist alliance from heck");
@@ -543,7 +545,7 @@ if (itemAmount($item`handful of smithereens`) > 0) {
     );
 }
 
-if (get<number>("_godLobsterFights") === 0) {
+if (get("_godLobsterFights") === 0) {
     set("choiceAdventure1310", 2);
     outfit("drops");
     useFamiliar($familiar`God Lobster`);
@@ -564,7 +566,7 @@ if (get<number>("_godLobsterFights") === 0) {
     runChoice(-1);
 }
 
-if (!get<boolean>("_photocopyUsed")) {
+if (!get("_photocopyUsed")) {
     faxbot($monster`swarm of scarab beatles`);
     Macro.if_(
         "!monstername eldritch tentacle",
@@ -585,7 +587,7 @@ if (!get<boolean>("_photocopyUsed")) {
     multiFightAutoAttack();
 }
 
-if (get<number>("_godLobsterFights") === 1) {
+if (get("_godLobsterFights") === 1) {
     set("choiceAdventure1310", 2);
     outfit("drops");
     useFamiliar($familiar`God Lobster`);
@@ -608,7 +610,7 @@ if (get<number>("_godLobsterFights") === 1) {
     runChoice(-1);
 }
 
-if (get<number>("_godLobsterFights") === 2) {
+if (get("_godLobsterFights") === 2) {
     set("choiceAdventure1310", 2);
     outfit("drops");
     useFamiliar($familiar`God Lobster`);
@@ -630,7 +632,7 @@ if (get<number>("_godLobsterFights") === 2) {
     visitUrl("choice.php");
     runChoice(-1);
 }
-if (get<number>("_sourceTerminalDuplicateUses") === 0) {
+if (get("_sourceTerminalDuplicateUses") === 0) {
     if (hasAsdon) {
         print(`Vroom vroom! Let's get some maps for pills!`, "blue");
         cliExecute("terminal educate duplicate");
@@ -730,7 +732,7 @@ useFamiliar($familiar`Stocking Mimic`);
 equip($slot`familiar`, famEquip);
 print("Brrrr, Snojo time", "blue");
 pickBjorn();
-adventureMacroAA(
+advMacroAA(
     $location`The X-32-F Combat Training Snowman`,
     stasisKill,
     () => {
@@ -748,11 +750,13 @@ withStash([$item`moveable feast`], () => {
     use($item`moveable feast`);
     useFamiliar($familiar`frumious bandersnatch`);
     use($item`moveable feast`);
+    useFamiliar($familiar`pocket professor`);
+    use($item`moveable feast`);
     useFamiliar($familiar`stocking mimic`);
 });
 
 equip($slot`familiar`, famEquip);
-adventureMacroAA(
+advMacroAA(
     $location`the neverending party`,
     stasisKill,
     () => {
@@ -790,13 +794,13 @@ if (get("_brickoFights") < 10) {
 }
 
 print("Tentacle", "blue");
-if (!get<boolean>("_eldritchHorrorEvoked")) {
+if (!get("_eldritchHorrorEvoked")) {
     pickBjorn();
     useSkill($skill`Evoke Eldritch Horror`);
     useSkill($skill`Tongue of the Walrus`);
     restoreHp(myMaxhp());
 }
-if (!get<boolean>("_eldritchTentacleFought")) {
+if (!get("_eldritchTentacleFought")) {
     pickBjorn();
     visitUrl("place.php?whichplace=forestvillage&action=fv_scientist");
     runChoice(1);
@@ -839,6 +843,7 @@ if (get("_backUpUses") < 11) {
     outfit("freefight stasis");
 }
 
+stasisKill.setAutoAttack();
 while (get("_witchessFights") < 4) {
     pickBjorn();
     visitUrl("campground.php?action=witchess");
@@ -854,7 +859,7 @@ while (get("_witchessFights") < 4) {
     restoreHp(myMaxhp());
 }
 
-while (get<number>("_lynyrdSnareUses") < 3) {
+while (get("_lynyrdSnareUses") < 3) {
     pickBjorn();
     use(1, $item`Lynyrd Snare`);
     multiFightAutoAttack();
@@ -864,7 +869,7 @@ while (get<number>("_lynyrdSnareUses") < 3) {
 useFamiliar($familiar`machine elf`);
 outfit("drops");
 pickBjorn();
-adventureMacroAA(
+advMacroAA(
     $location`the deep machine tunnels`,
     Macro.skill($skill`curse of weaksauce`)
         .skill($skill`extract`)
@@ -872,7 +877,7 @@ adventureMacroAA(
         .attack()
         .repeat(),
     () => {
-        return get<number>("_machineTunnelsAdv") < 5 && get("encountersUntilDMTChoice") > 0;
+        return get("_machineTunnelsAdv") < 5 && get("encountersUntilDMTChoice") > 0;
     },
     () => {
         multiFightAutoAttack();
@@ -883,36 +888,51 @@ adventureMacroAA(
 
 outfit("freefight stasis");
 
-if (get<number>("_pocketProfessorLectures") === 0) {
+if (get("_pocketProfessorLectures") === 0) {
     useFamiliar($familiar`Pocket Professor`);
     equip($slot`acc3`, $item`Brutal Brogues`);
     equip($slot`acc2`, $item`Belt of Loathing`);
     bjornifyFamiliar($familiar`pair of ragged claws`);
     setAutoAttack(0);
+    const meteors = get("_meteorShowerUses");
+    const profMacro = Macro.externalIf(
+        !haveSkill($skill`lecture on relativity`) && meteors !== get("_meteorShowerUses"),
+        Macro.skill($skill`meteor shower`)
+    )
+        .if_("!hasskill lecture on relativity", Macro.trySkill($skill`deliver your thesis`))
+        .trySkill($skill`lecture on relativity`)
+        .trySkill($skill`curse of weaksauce`)
+        .trySkill($skill`extract`)
+        .trySkill($skill`sing along`)
+        .attack()
+        .repeat();
     if (itemAmount($item`magical sausage casing`) < 30) {
         equip($slot`off-hand`, $item`Kramco Sausage-o-Matic™`);
         restoreHp(myMaxhp());
-        adv1(freeFightZone, -1, () => {
-            return "";
+        advMacro(freeFightZone, profMacro, 1, () => {
+            while (inMultiFight()) {
+                runCombat(profMacro.toString());
+            }
         });
         useFamiliar($familiar`stocking mimic`);
         outfit("freefight stasis");
         pickBjorn();
         stasisKill.setAutoAttack();
         visitUrl("place.php?whichplace=chateau&action=chateau_painting");
-        runCombat();
+        runCombat(stasisKill.toString());
     } else {
+        setAutoAttack(0);
         visitUrl("place.php?whichplace=chateau&action=chateau_painting");
-        runCombat();
+        runCombat(profMacro.toString());
+        while (inMultiFight()) {
+            runCombat(profMacro.toString());
+        }
         outfit("freefight stasis");
         pickBjorn();
         useFamiliar($familiar`stocking mimic`);
         equip($slot`off-hand`, $item`Kramco Sausage-o-Matic™`);
-        stasisKill.setAutoAttack();
         restoreHp(myMaxhp());
-        adv1(freeFightZone, -1, () => {
-            return "";
-        });
+        advMacroAA(freeFightZone, stasisKill, 1);
     }
 }
 
@@ -944,7 +964,7 @@ Macro.if_("monstername drunk pygmy", Macro.skill($skill`extract`))
     )
     .setAutoAttack();
 
-adventureMacroAA(
+advMacroAA(
     $location`hidden bowling alley`,
     Macro.if_("monstername drunk pygmy", Macro.skill($skill`extract`))
         .if_("monstername pygmy orderlies", Macro.skill($skill`snokebomb`))
@@ -1019,7 +1039,7 @@ set("choiceAdventure1387", 2);
 restoreHp(myMaxhp());
 pickBjorn();
 while (get(`_saberForceUses`) < 5 || get(`_saberForceMonsterCount`) > 0) {
-    adventureMacroAA(
+    advMacroAA(
         $location`hidden bowling alley`,
         Macro.if_(
             "(monstername eldritch tentacle) || (monsterid 1965)",
