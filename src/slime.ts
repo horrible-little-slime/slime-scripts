@@ -23,6 +23,7 @@ import {
     useSkill,
     visitUrl,
     weightAdjustment,
+    getWorkshed,
 } from "kolmafia";
 import { $location, $item, $slot, $effect, $skill, $familiar, have, Macro } from "libram";
 import { get, set } from "libram/dist/property";
@@ -288,7 +289,7 @@ export function main(target: string) {
                 cliExecute("uneffect Ur-Kel");
             }
             if (
-                Object.getOwnPropertyNames(getCampground()).includes("Asdon Martin keyfob") &&
+                getWorkshed() === $item`Asdon Martin keyfob` &&
                 getFuel() > 50 &&
                 !get("banishedMonsters").includes("Spring-Loaded Front Bumper")
             ) {
